@@ -31,43 +31,36 @@ def append_entry(kind: str, amount: float, note: str, date_str: str) -> None:
 def parse_amount(s: str) -> float:
     return float(s.replace("$", "").replace(",", "").strip())
 
-def compute_balances(rows: List[Dict[str, str]]) -> Tuple[float, float, float, float]:
-    """
-    Returns:
-      onepay_balance: advances - paychecks_applied (simple model)
-      income_total: sum(paycheck)
-      bills_total: sum(bill)
-      spend_total: sum(spend)
-    """
-    onepay_balance = 0.0
-    income_total = 0.0
-    bills_total = 0.0
-    spend_total = 0.0
+def compute_net(rows):
+    net = 0.0
+    income = 0.0
+    bills = 0.0
+    spend = 0.0
 
     for row in rows:
         kind = row["kind"].strip().lower()
         amt = parse_amount(row["amount"])
 
         if kind == "advance":
-            onepay_balance += amt
+            net -= amt
+
         elif kind == "paycheck":
-            income_total += amt
-            onepay_balance -= amt
+            net += amt
+            income += amt
+
         elif kind == "bill":
-            bills_total += amt
+            net -= amt
+            bills += amt
+
         elif kind == "spend":
-            spend_total += amt
+            net -= amt
+            spend += amt
 
-    # Round for display
-    return round(onepay_balance, 2), round(income_total, 2), round(bills_total, 2), round(spend_total, 2)
-
-def status_onepay(balance: float) -> str:
-    if balance > 0:
-        return f"🔴 OnePay behind by ${balance:.2f}"
-    if balance == 0:
-        return "🟢 OnePay GREEN ($0 behind)"
-    return f"🟢 OnePay GREEN with ${abs(balance):.2f} buffer"
-
+    return round(net, 2), round(income, 2), round(bills, 2), round(spend, 2)
+def status_from_net(net: float) -> str:
+    if net < 0:
+        return f"🔴 Behind by ${abs(net):.2f}"
+    return f"🟢 Safe buffer ${net:.2f}"
 def paychecks_to_green(balance: float, typical_paycheck: float) -> Tuple[int, float]:
     """
     If balance > 0, returns (num_checks_needed, balance_after_last_check).
