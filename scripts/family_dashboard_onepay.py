@@ -176,6 +176,11 @@ def main():
             break
         else:
             print("Invalid choice.\n")
-
+import sys
 if __name__ == "__main__":
-    main()
+    # If running in GitHub (non-interactive), just show dashboard once
+    if not sys.stdin.isatty():
+        rows = read_ledger()
+        money_dashboard(rows)
+    else:
+        main()
