@@ -1,9 +1,3 @@
-# family_dashboard_onepay.py
-# Tiny family money dashboard:
-# - Tracks OnePay balance (how far "behind" you are)
-# - Tracks paychecks (income), advances (increase OnePay balance), bills, and misc spend
-# - Stores everything in a simple CSV so you don't have to edit code each time
-
 import csv
 import os
 from datetime import datetime
