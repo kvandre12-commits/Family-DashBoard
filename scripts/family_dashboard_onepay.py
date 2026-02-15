@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from typing import List, Dict, Tuple
 
-LEDGER_FILE = "family_ledger.csv"
+LEDGER_FILE = os.path.join(os.path.dirname(__file__), "family_ledger.csv")
 
 KINDS = {"paycheck", "advance", "bill", "spend"}
 
