@@ -19,4 +19,4 @@ jobs:
           python-version: "3.11"
 
       - name: Run dashboard script
-        run: python family_dashboard_onepay.py
+        run: python scripts/family_dashboard_onepay.py
