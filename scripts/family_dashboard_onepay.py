@@ -81,7 +81,7 @@ def paychecks_to_green(balance: float, typical_paycheck: float) -> Tuple[int, fl
             break
     return checks, round(remaining, 2)
 
-def money_dashboard(rows: List[Dict[str, str]]) -> None:net, income_total, bills_total, spend_total = compute_net(rows)
+def money_dashboard(rows: List[Dict[str, str]]) -> None: net, income_total, bills_total, spend_total = compute_net(rows)
     # Cashflow view (this period): income - bills - spend
     cash_after = round(income_total - bills_total - spend_total, 2)
 
@@ -112,7 +112,7 @@ def money_dashboard(rows: List[Dict[str, str]]) -> None:net, income_total, bills
             print(f"Paychecks to GREEN: {checks}")
             print(f"After paycheck #{checks}: {status_onepay(after_last)}")
             print()
-
+            
 def prompt_add_entry() -> None:
     print("\nAdd Entry Types:")
     print("  paycheck = money coming in")
