@@ -82,7 +82,6 @@ def paychecks_to_green(balance: float, typical_paycheck: float) -> Tuple[int, fl
     return checks, round(remaining, 2)
 
 def money_dashboard(rows: List[Dict[str, str]]) -> None:net, income_total, bills_total, spend_total = compute_net(rows)
-
     # Cashflow view (this period): income - bills - spend
     cash_after = round(income_total - bills_total - spend_total, 2)
 
