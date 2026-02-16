@@ -81,38 +81,27 @@ def paychecks_to_green(balance: float, typical_paycheck: float) -> Tuple[int, fl
             break
     return checks, round(remaining, 2)
 
-def money_dashboard(rows: List[Dict[str, str]]) -> None: net, income_total, bills_total, spend_total = compute_net(rows)
-    # Cashflow view (this period): income - bills - spend
-    cash_after = round(income_total - bills_total - spend_total, 2)
+def money_dashboard(rows: List[Dict[str, str]]) -> None:
+    net, income_total, bills_total, spend_total = compute_net(rows)
+
+    # In the net model, this is the truth number
+    cash_after = net
 
     print("\n==============================")
     print("   FAMILY MONEY DASHBOARD")
     print("==============================")
-    print(status_onepay(onepay_balance))
+    print(status_from_net(net))
     print(f"Income total (paychecks): ${income_total:.2f}")
     print(f"Bills total:              ${bills_total:.2f}")
     print(f"Other spend total:        ${spend_total:.2f}")
     print("------------------------------")
+
     if cash_after >= 0:
         print(f"✅ Cash after bills/spend: ${cash_after:.2f}")
     else:
         print(f"⚠️ Cash after bills/spend: -${abs(cash_after):.2f}")
+
     print("==============================\n")
-
-    # Projection (optional)
-    if onepay_balance > 0:
-        try:
-            typical = parse_amount(input("Typical paycheck amount for projection (or press Enter to skip): ") or "0")
-        except ValueError:
-            typical = 0.0
-
-        if typical > 0:
-            checks, after_last = paychecks_to_green(onepay_balance, typical)
-            print("\n--- OnePay Go-Green Projection ---")
-            print(f"Paychecks to GREEN: {checks}")
-            print(f"After paycheck #{checks}: {status_onepay(after_last)}")
-            print()
-            
 def prompt_add_entry() -> None:
     print("\nAdd Entry Types:")
     print("  paycheck = money coming in")
