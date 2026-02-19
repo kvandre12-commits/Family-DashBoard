@@ -2,4 +2,6 @@ date,kind,amount,note
 2026-02-15,advance,430,behind 
 2026-02-26,paycheck,1221,biweekly
 2026-02-28,bill,85,food and gas
-2026-02-26,bill,500, marie
+2026-02-26,bill,800,biweekly
+2026-03-12,bill,800,biweekly
+2026-03-12,paycheck,1221,biweekly
